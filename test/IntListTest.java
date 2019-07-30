@@ -17,12 +17,12 @@ class IntListTest {
     } */
 
     @Test
-    void createEmpty() {
+    void canCreateAnIntList() {
         assertEquals(0, intList.getSize());
     }
 
     @Test
-    void addOne() {
+    void canAddOnce() {
         intList.add(99);
         assertEquals(1, intList.getSize(),
         "Unexpected value retrieved from intList");
@@ -31,21 +31,23 @@ class IntListTest {
     }
 
     @RepeatedTest(3)
-    void repeatedAdding(RepetitionInfo repetitionInfo) {
-        //System.out.println("Repetition #" + repetitionInfo.getCurrentRepetition());
-        for (int val = 0; val < repetitionInfo.getCurrentRepetition(); val++) {
-            intList.add(val);
-            //System.out.println("adding " + val);
-        }
-        assertEquals(repetitionInfo.getCurrentRepetition(), intList.getSize());
-        for (int index = 0; index < repetitionInfo.getCurrentRepetition(); index++) {
-            assertEquals(index, intList.getContents()[index]);
-            //System.out.println("tested " + index + "at position " + index);
+    void canRepeatAdd(RepetitionInfo repetitionInfo) {
+        // elementCount increments thus 1, 2, 3, ...
+        final int elementCount = repetitionInfo.getCurrentRepetition();
+        // put integers into intList
+        for (int index = 0; index < elementCount; index++)
+            intList.add(index);
+        // intList is the right length?
+        assertEquals(elementCount, intList.getSize());
+        // check the right inte are in the right place
+        for (int index = 0; index < elementCount; index++) {
+            String msg = "failed when testing for value " + index + "at position " + index;
+            assertEquals(index, intList.getContents()[index], msg);
         }
     }
 
     @Test
-    void testGetter() {
+    void canGetAt() {
         intList.add(6);
         intList.add(5);
         intList.add(4);
@@ -68,7 +70,7 @@ class IntListTest {
     }
     */
     @Test
-    void testEmptyGet() {
+    void canThowWhenEmpptyIndexError() {
         assertThrows(Exception.class, () -> {
             intList.getAt(0);
         });
